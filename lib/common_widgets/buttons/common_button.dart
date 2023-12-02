@@ -1,4 +1,3 @@
-import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class CommonButtonWidget extends StatelessWidget {
@@ -28,8 +27,7 @@ class CommonButtonWidget extends StatelessWidget {
           width: double.maxFinite,
           height: MediaQuery.of(context).size.height * .07,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius!),
-              color: buttonColor),
+              borderRadius: BorderRadius.circular(borderRadius!), color: color),
           child: isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(

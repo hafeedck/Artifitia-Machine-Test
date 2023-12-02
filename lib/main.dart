@@ -1,4 +1,6 @@
+import 'package:artifitia_machine_test/controllers/quiz_controller.dart';
 import 'package:artifitia_machine_test/controllers/splash_controller.dart';
+import 'package:artifitia_machine_test/route/page_route.dart';
 import 'package:artifitia_machine_test/views/splash/spalsh_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +18,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SplashState()),
+        ChangeNotifierProvider(create: (_) => QuizState()),
+        
       ],
-      child: const MaterialApp(
+      child:  MaterialApp(
         debugShowCheckedModeBanner: false,
+        routes: routes,
         title: "Artifitia Machine Test",
-        home: SplashView(),
+        initialRoute: '/splash',
       ),
     );
   }
