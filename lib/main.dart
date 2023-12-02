@@ -1,11 +1,11 @@
 import 'package:artifitia_machine_test/controllers/quiz_controller.dart';
 import 'package:artifitia_machine_test/controllers/splash_controller.dart';
 import 'package:artifitia_machine_test/route/page_route.dart';
-import 'package:artifitia_machine_test/views/splash/spalsh_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

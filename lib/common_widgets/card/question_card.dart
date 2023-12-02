@@ -50,8 +50,10 @@ class QuestionCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: controller.getTheRightColor(index) == Colors.green
-                          ? primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
+                          ? Colors.green
+                          : controller.getTheRightColor(index) == Colors.red
+                              ? Colors.red
+                              : Colors.transparent,
                       border:
                           Border.all(width: 1, color: const Color(0xff878787)),
                       borderRadius: BorderRadius.circular(12),
@@ -63,8 +65,8 @@ class QuestionCard extends StatelessWidget {
                             index: index,
                             text: questions!.options[index].text,
                             press: () {
-                              controller.checkAns(
-                                  questions!, index, animationController!,context);
+                              controller.checkAns(questions!, index,
+                                  animationController!, context);
                             },
                           ),
                         ),

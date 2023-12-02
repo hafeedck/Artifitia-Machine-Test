@@ -1,6 +1,7 @@
 import 'package:artifitia_machine_test/api/api.dart';
+import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
 import 'package:artifitia_machine_test/models/question_model.dart';
-import 'package:artifitia_machine_test/views/quiz/quiz_home_screen.dart';
+import 'package:artifitia_machine_test/service/sql_database.dart';
 import 'package:artifitia_machine_test/views/sucess_failure_screen/failure_screen.dart';
 import 'package:artifitia_machine_test/views/sucess_failure_screen/sucess_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,11 @@ class QuizState extends ChangeNotifier {
   }
 
   double _count = 0;
+
   double get count => _count;
-  set count(double numOfCorrectAns) {
-    _count = _count;
+
+  set count(double value) {
+    _count = value;
     notifyListeners();
   }
 
@@ -105,9 +108,17 @@ class QuizState extends ChangeNotifier {
       });
     } else {
       if (numOfCorrectAns == questionList.length) {
+        int wrongAnswer = questionList.length - numOfCorrectAns;
+        final databaseHelper = DatabaseHelper();
+        databaseHelper.insertQuizData(
+            numOfCorrectAns.toString(), wrongAnswer.toString());
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => const SuccessScreen()));
       } else {
+        int wrongAnswer = questionList.length - numOfCorrectAns;
+        final databaseHelper = DatabaseHelper();
+        databaseHelper.insertQuizData(
+            numOfCorrectAns.toString(), wrongAnswer.toString());
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => const FailureScreen()));
       }
@@ -127,5 +138,13 @@ class QuizState extends ChangeNotifier {
       }
     }
     return Colors.grey;
+  }
+
+  pogressColor(double value) {
+    if (value > 0.5) {
+      return Colors.red;
+    } else {
+      return progessbarColor;
+    }
   }
 }

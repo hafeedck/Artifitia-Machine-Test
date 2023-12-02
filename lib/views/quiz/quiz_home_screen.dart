@@ -22,11 +22,27 @@ class _QuizHomeViewState extends State<QuizHomeView>
     // Initialize the animation controller
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 40),
+      duration: const Duration(seconds: 10),
     );
 
     // Start the animation
     _animationController.forward();
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Provider.of<QuizState>(context, listen: false)
+            .nextQuestion(_animationController, context);
+      }
+    });
+    _animationController.addListener(() {
+      // This block will be executed whenever the animation value changes
+      Provider.of<QuizState>(context, listen: false).count =
+          _animationController.value;
+      if (_animationController.value == 5.0) {
+        // ignore: void_checks
+        return Provider.of<QuizState>(context, listen: false)
+            .pogressColor(_animationController.value);
+      }
+    });
   }
 
   @override

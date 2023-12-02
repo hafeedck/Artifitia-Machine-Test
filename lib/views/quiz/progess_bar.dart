@@ -1,4 +1,3 @@
-import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
 import 'package:artifitia_machine_test/controllers/quiz_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,18 +46,15 @@ class _ProgressBarState extends State<ProgressBar>
               // LayoutBuilder provides us the available space for the container
               // constraints.maxWidth needed for our animation
               LayoutBuilder(
-                builder: (context, constraints) => Container(
-                  // Use AnimatedBuilder to rebuild only when the animation changes
-                  child: AnimatedBuilder(
-                    animation: widget.animationController!,
-                    builder: (context, child) => Container(
-                      // Move from right to left by multiplying the animated value with max width
-                      width: widget.animationController!.value *
-                          constraints.maxWidth,
-                      decoration: BoxDecoration(
-                        color: progessbarColor,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+                builder: (context, constraints) => AnimatedBuilder(
+                  animation: widget.animationController!,
+                  builder: (context, child) => Container(
+                    // Move from right to left by multiplying the animated value with max width
+                    width: widget.animationController!.value *
+                        constraints.maxWidth,
+                    decoration: BoxDecoration(
+                      color: controller.pogressColor(controller.count),
+                      borderRadius: BorderRadius.circular(50),
                     ),
                   ),
                 ),
@@ -70,7 +66,7 @@ class _ProgressBarState extends State<ProgressBar>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${(widget.animationController!.value * 10).round()}",
+                        "${(controller.count * 10).round()}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],

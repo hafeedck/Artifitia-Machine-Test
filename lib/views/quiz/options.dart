@@ -32,9 +32,7 @@ class OptionView extends StatelessWidget {
           return Colors.grey;
         }
 
-        IconData getTheRightIcon() {
-          return getTheRightColor() == Colors.red ? Icons.close : Icons.done;
-        }
+        
 
         return InkWell(
           onTap: qnController.isAnswered ? null : press,
