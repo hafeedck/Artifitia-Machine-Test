@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-click the start button in the home and 
+click the start button in the home and start the quiz when you click on right answer ishows green if it is wrong it tuurned red and a pogrerss bar to show countdown ;
 
 This project is a starting point for a Flutter application.
 
