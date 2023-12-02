@@ -1,3 +1,4 @@
+import 'package:artifitia_machine_test/controllers/home_controller.dart';
 import 'package:artifitia_machine_test/controllers/quiz_controller.dart';
 import 'package:artifitia_machine_test/controllers/splash_controller.dart';
 import 'package:artifitia_machine_test/route/page_route.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SplashState()),
+        ChangeNotifierProvider(create: (_) => HomeState()),
         ChangeNotifierProvider(create: (_) => QuizState()),
         
       ],
