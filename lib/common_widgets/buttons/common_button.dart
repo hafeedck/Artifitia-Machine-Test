@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CommonButtonWidget extends StatelessWidget {
   final String label;
   final Color? color;
+  final Color? textcolorcolor;
   final double? fontSize;
   final double? borderRadius;
   final VoidCallback onClick;
@@ -15,7 +16,8 @@ class CommonButtonWidget extends StatelessWidget {
       this.fontSize,
       this.isLoading,
       this.borderRadius = 10,
-      this.color});
+      this.color,
+      this.textcolorcolor});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CommonButtonWidget extends StatelessWidget {
                     label,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: textcolorcolor ?? Colors.white,
                       fontSize: fontSize,
                       fontWeight: FontWeight.w400,
                     ),

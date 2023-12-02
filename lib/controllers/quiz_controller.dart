@@ -2,8 +2,6 @@ import 'package:artifitia_machine_test/api/api.dart';
 import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
 import 'package:artifitia_machine_test/models/question_model.dart';
 import 'package:artifitia_machine_test/service/sql_database.dart';
-import 'package:artifitia_machine_test/views/sucess_failure_screen/failure_screen.dart';
-import 'package:artifitia_machine_test/views/sucess_failure_screen/sucess_screen.dart';
 import 'package:flutter/material.dart';
 
 class QuizState extends ChangeNotifier {
@@ -67,7 +65,7 @@ class QuizState extends ChangeNotifier {
   }
 
   void checkAns(QuestionModel question, int selectedIndex,
-      AnimationController _animationController, BuildContext context) {
+      AnimationController animationController, BuildContext context) {
     // because once user press any option then it will run
     _isAnswered = true;
     // ignore: unrelated_type_equality_checks
@@ -82,16 +80,16 @@ class QuizState extends ChangeNotifier {
 
     // Once user select an ans after 1s it will go to the next qn
     Future.delayed(const Duration(seconds: 1), () {
-      nextQuestion(_animationController, context);
+      nextQuestion(animationController, context);
     });
     if (_isAnswered == false) {
       Future.delayed(const Duration(seconds: 1), () {
-        nextQuestion(_animationController, context);
+        nextQuestion(animationController, context);
       });
     }
   }
 
-  nextQuestion(AnimationController _animationController, BuildContext context) {
+  nextQuestion(AnimationController animationController, BuildContext context) {
     if (_questionNumber != questionList.length) {
       _isAnswered = false;
       pagecontroller.nextPage(
@@ -100,27 +98,27 @@ class QuizState extends ChangeNotifier {
       );
 
       // Reset the counter
-      _animationController.reset();
+      animationController.reset();
 
       // Once timer is finished, go to the next question
-      _animationController.forward().whenComplete(() {
-        nextQuestion(_animationController, context);
+      animationController.forward().whenComplete(() {
+        nextQuestion(animationController, context);
       });
     } else {
-      if (numOfCorrectAns == questionList.length) {
+      if (numOfCorrectAns >= 4) {
         int wrongAnswer = questionList.length - numOfCorrectAns;
         final databaseHelper = DatabaseHelper();
         databaseHelper.insertQuizData(
             numOfCorrectAns.toString(), wrongAnswer.toString());
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const SuccessScreen()));
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/success', (route) => false);
       } else {
         int wrongAnswer = questionList.length - numOfCorrectAns;
         final databaseHelper = DatabaseHelper();
         databaseHelper.insertQuizData(
             numOfCorrectAns.toString(), wrongAnswer.toString());
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const FailureScreen()));
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/failure', (route) => false);
       }
     }
   }
@@ -141,10 +139,21 @@ class QuizState extends ChangeNotifier {
   }
 
   pogressColor(double value) {
-    if (value > 0.5) {
+    if (value > 0.75) {
       return Colors.red;
     } else {
       return progessbarColor;
     }
+  }
+    void reset() {
+    questionList.clear();
+    _isLoading = false;
+    _numOfCorrectAns = 0;
+    _count = 0;
+    _questionNumber = 1;
+    pagecontroller = PageController(viewportFraction: 1, keepPage: true);
+    _isAnswered = false;
+    _correctAns = 0;
+    _selectedAns = 0;
   }
 }

@@ -12,21 +12,7 @@ class ProgressBar extends StatefulWidget {
   _ProgressBarState createState() => _ProgressBarState();
 }
 
-class _ProgressBarState extends State<ProgressBar>
-    with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the animation controller
-    widget.animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
-
-    // Start the animation
-    widget.animationController!.forward();
-  }
-
+class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     final QuizState controller = Provider.of<QuizState>(context);
@@ -66,7 +52,7 @@ class _ProgressBarState extends State<ProgressBar>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${(controller.count * 10).round()}",
+                        "${(controller.count * 40).round()}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -78,12 +64,5 @@ class _ProgressBarState extends State<ProgressBar>
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // Dispose of the animation controller to free up resources
-    widget.animationController!.dispose();
-    super.dispose();
   }
 }

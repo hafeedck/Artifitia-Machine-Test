@@ -1,5 +1,6 @@
 import 'package:artifitia_machine_test/common_widgets/buttons/common_button.dart';
 import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
+import 'package:artifitia_machine_test/extensions/widget_extension.dart';
 import 'package:flutter/material.dart';
 
 class FailureScreen extends StatelessWidget {
@@ -17,15 +18,16 @@ class FailureScreen extends StatelessWidget {
           'assets/images/failure_screen.png',
           fit: BoxFit.fill,
         ),
-        SizedBox(
-          height: 25,
-        ),
+        25.0.spaceY,
         SizedBox(
           width: size.width * 0.4,
           child: CommonButtonWidget(
             label: "Try again..!",
             color: Colors.red,
-            onClick: () {},
+            onClick: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/splash', (route) => false);
+            },
             fontSize: 18,
           ),
         )

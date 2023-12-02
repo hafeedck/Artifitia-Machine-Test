@@ -1,4 +1,4 @@
-import 'package:artifitia_machine_test/common_widgets/colors/colors.dart';
+import 'package:artifitia_machine_test/common_widgets/buttons/common_button.dart';
 import 'package:artifitia_machine_test/common_widgets/text/text.dart';
 import 'package:artifitia_machine_test/controllers/quiz_controller.dart';
 import 'package:artifitia_machine_test/models/question_model.dart';
@@ -9,9 +9,8 @@ import 'package:provider/provider.dart';
 class QuestionCard extends StatelessWidget {
   final AnimationController? animationController;
 
-  QuestionCard({
+  const QuestionCard({
     Key? key,
-    // it means we have to pass this
     this.questions,
     this.animationController,
   }) : super(key: key);
@@ -39,7 +38,7 @@ class QuestionCard extends StatelessWidget {
           height: size.height * 0.05,
         ),
         SizedBox(
-          height: size.height * 0.455,
+          height: size.height * 0.4,
           // width: size.width*0.70,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
@@ -75,7 +74,18 @@ class QuestionCard extends StatelessWidget {
                   ),
                 );
               }),
-        )
+        ),
+        SizedBox(
+            width: size.width * 0.3,
+            child: CommonButtonWidget(
+              label: "Next",
+              color: Colors.white,
+              textcolorcolor: Colors.black,
+              onClick: () {
+                controller.nextQuestion(animationController!, context);
+              },
+              fontSize: 18,
+            )),
       ],
     );
   }

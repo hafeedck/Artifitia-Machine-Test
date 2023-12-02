@@ -15,6 +15,7 @@ class QuizHomeView extends StatefulWidget {
 class _QuizHomeViewState extends State<QuizHomeView>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  
 
   @override
   void initState() {
@@ -22,27 +23,38 @@ class _QuizHomeViewState extends State<QuizHomeView>
     // Initialize the animation controller
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 40),
     );
 
     // Start the animation
     _animationController.forward();
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Provider.of<QuizState>(context, listen: false)
-            .nextQuestion(_animationController, context);
+        final QuizState controller =
+            Provider.of<QuizState>(context, listen: false);
+        controller.nextQuestion(_animationController, context);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Add listeners here instead of initState
+
     _animationController.addListener(() {
       // This block will be executed whenever the animation value changes
-      Provider.of<QuizState>(context, listen: false).count =
-          _animationController.value;
-      if (_animationController.value == 5.0) {
-        // ignore: void_checks
-        return Provider.of<QuizState>(context, listen: false)
-            .pogressColor(_animationController.value);
-      }
+      final QuizState controller =
+          Provider.of<QuizState>(context, listen: false);
+      controller.count = _animationController.value;
     });
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the animation controller to free up resources
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,7 +78,7 @@ class _QuizHomeViewState extends State<QuizHomeView>
               ]),
               SizedBox(
                 height: size.height * 0.6,
-                width: size.width * 0.5,
+                width: size.width * 0.8,
                 child: PageView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: controller.pagecontroller,
